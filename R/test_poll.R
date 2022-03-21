@@ -26,11 +26,14 @@ test_poll <- function(
     token = Sys.getenv("BEARER_TOKEN"),
     show_poll_text = TRUE
 ) {
+    ## Construct the Twitter API call
     hdr <- c(Authorization = sprintf('Bearer %s', token))
     URL <- paste0("https://api.twitter.com/2/tweets/", tweet_id)
     opt <- list(poll.fields = "options", expansions = 'attachments.poll_ids')
+    ## Retrieve the tweet information from Twitter
     twt <- httr::GET(url = URL, httr::add_headers(.headers = hdr), query = opt)
     dat <- jsonlite::fromJSON(httr::content(twt, as = "text"))
+    ## Show the text of the poll?
     if ( show_poll_text ) {
         w <- getOption("width") - 1
         b <- strrep("-", w)
@@ -41,12 +44,16 @@ test_poll <- function(
         }
         cat("\n")
     }
+    ## Solve an R CMD check issue related to using non-standard evaluation
+    ## (no visible binding for global variable ‘label’)
+    label <- NULL; votes <- NULL
+    ## Construct a contingency table from the tweet data
     tab <- dat$includes$polls$options[[1]] %>%
         dplyr::select(label, votes) %>%
         dplyr::mutate(factor1 = trimws(gsub(paste0(sep, ".+"), "", label))) %>%
         dplyr::mutate(factor2 = trimws(gsub(paste0(".+", sep), "", label))) %>%
         dplyr::select(-label) %>%
-        tidyr::pivot_wider(names_from = factor2, values_from = votes) %>%
+        tidyr::pivot_wider(names_from = "factor2", values_from = "votes") %>%
         tibble::column_to_rownames("factor1")
     return(contingency_test(as.matrix(tab)))
 }
