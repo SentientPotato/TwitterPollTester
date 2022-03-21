@@ -38,3 +38,8 @@ center <- function(text, width) {
     right_pad  <- strrep(x = " ", times = pad_base + (width - text_width) %% 2)
     return(paste0(left_pad, text, right_pad))
 }
+
+## This function left-pads a string to a specified width
+left_pad <- function(text, width) {
+    return(sprintf(paste0("%-", width, "s"), text))
+}
