@@ -25,7 +25,7 @@ fmt_p <- function(p, star = TRUE) {
     return(sprintf("%0.3f%s", p, ann))
 }
 fmt_BF <- function(BF, apos = TRUE) {
-    ann <- strrep("*", apos * sum(BF >= 10, BF >= 30, BF >= 100))
+    ann <- strrep("'", apos * sum(BF >= 10, BF >= 30, BF >= 100))
     return(sprintf("%g%s", BF, ann))
 }
 
