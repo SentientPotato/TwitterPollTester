@@ -19,11 +19,13 @@ dataframe with three observations of two variables, "Quantity" and
 "Value". The "Quantity" variable names the quantity returned, and its
 observations will be "Fisher's Exact Text p-value", "G-test p-value",
 and "Bayes Factor". The "Value" variable gives the p-values and Bayes
-factor value for those tests.\preformatted{The result object will also have a "contingency_table" attribute whose
-value is equal to the "tab" parameter.
-}
+factor value for those tests. The result object will also have a
+"contingency_table" attribute whose value is the "tab" parameter.
 }
 \description{
+Test Independence of Factors in a 2x2 Contingency Table
+}
+\details{
 There are a number of statistical techniques that may be used to test
 whether two factors in a contingency table are independent or related.
 The G-test is a frequentist test of the hypothesis that the factors are
@@ -33,8 +35,7 @@ small number of observations, Fisher's exact test is more accurate
 before running the test, commonly 0.05. The test will return a p-value,
 and if that value is below the chosen significance level, then you can
 reject the null hypothesis that the factors are independent of each other.
-}
-\details{
+
 We can use Bayesian analysis and generate a Bayes Factor comparing the
 hypotheses that the factors are related and that they're independent using
 the procedure in Gunel and Dickey (1974). This Bayes Factor will tell you
@@ -56,5 +57,5 @@ McDonald, J.H. 2014. Handbook of Biological Statistics (3rd ed.).
 Sparky House Publishing, Baltimore, Maryland.
 }
 \seealso{
-print.ContingencyTableTests
+\code{\link[=print.ContingencyTableTests]{print.ContingencyTableTests()}}
 }
